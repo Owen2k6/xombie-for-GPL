@@ -1,7 +1,7 @@
 use kerberos_asn1::{ApReq, Authenticator, EncTicketPart, KerberosTime, Microseconds, PrincipalName};
 use kerberos_constants::*;
 use tokio::sync::RwLock;
-use xblive::krb::service::ServiceAddress;
+use xblive::krb::service::{ServiceAddress, ServiceResult, INVALID_SERIVCE_ID};
 
 use std::convert::TryInto;
 use std::net::SocketAddr;
@@ -18,7 +18,7 @@ use xbox_sys::codec::Decode;
 use xbox_sys::crypto::SymmetricKey;
 
 use xombie::db;
-use xombie::krb::{DecryptError, SymmetricKeyCreateError, enc_key_to_symmetric_key, krb_decrypt_and_decode, AD_TYPE_SERVICE_ADDRESSES, AT_DOMAINS};
+use xombie::krb::{DecryptError, SymmetricKeyCreateError, enc_key_to_symmetric_key, krb_decrypt_and_decode, AD_TYPE_SERVICE_ADDRESSES, AD_TYPE_USERS, AT_DOMAINS};
 
 use crate::Services;
 use crate::open_clients::OpenClients;
@@ -111,9 +111,9 @@ async fn process_control_init(
 {
     use HandleControlInitError::*;
 
-    eprintln!("Recevied control init packet from {}", peer);
+    eprintln!("Received control init packet from {}", peer);
 
-    const CUR_EXT_IP: [u8;4] = [192, 168, 1, 91];
+    const CUR_EXT_IP: [u8;4] = [192, 168, 5, 1];
 
     let (sg_master_key, _) = xombie::secrets::get_sg_master_key(CUR_EXT_IP)
         .await;
@@ -129,16 +129,46 @@ async fn process_control_init(
     let ad_vec = enc_ticket_part.authorization_data
         .ok_or(NoAdData)?;
 
-    if ad_vec.len() != 1 {
+    let service_result = [ServiceResult {
+        id: INVALID_SERIVCE_ID,
+        hr: 0x8000_0000,
+        port: 0,
+        _rsvd_12: 0,
+    }; 12];
+
+    let mut service_address = ServiceAddress {
+        hr: 0,
+        hr_user: [0;4],
+        user_flags: [0;4],
+        bw_limit: 9001,  // Do we still do 'over 9000' jokes?
+        _rsvd_28: 0,
+        _rsvd_2c: 0,
+        _rsvd_30: 0,
+        _rsvd_34: 0,
+        _rsvd_38: 0,
+        _rsvd_3c: 0,
+        _rsvd_40: 0,
+        _rsvd_44: 0,
+        site_ip_address: xblive::net::InAddr(CUR_EXT_IP),
+        num_services: 0,
+        service_result,
+    };
+
+    if ad_vec.len() < 1 {
         return Err(NoAdData);
     }
 
-    if ad_vec[0].ad_type != AD_TYPE_SERVICE_ADDRESSES {
-        return Err(AdDataWrongType(ad_vec[0].ad_type))
+    for ad_entry in &ad_vec {
+        if ad_entry.ad_type == AD_TYPE_SERVICE_ADDRESSES {
+            (_, service_address) = ServiceAddress::decode(&ad_entry.ad_data)
+                .map_err(|_| ServiceAddressParseError)?;
+        } else if ad_entry.ad_type == AD_TYPE_USERS {
+            eprintln!("~~~TODO~~~: AD_TYPE_USERS");
+        } else {
+            eprintln!("FIXME: ad_type = {}\n", ad_entry.ad_type);
+            return Err(AdDataWrongType(ad_entry.ad_type));
+        }
     }
-
-    let (_, service_address) = ServiceAddress::decode(&ad_vec[0].ad_data)
-        .map_err(|_| ServiceAddressParseError)?;
 
     let (gamertag, _domain) = gamertag_from_cname(&enc_ticket_part.cname, AT_DOMAINS)
         .ok_or(UnknownTicketCName(enc_ticket_part.cname.clone()))?;

@@ -146,6 +146,8 @@ pub async fn get_key_for_xuid(client: &Client, xuid: Xuid, key_type: KeyType) ->
 }
 
 pub async fn get_xuid_for_gamertag(client: &Client, gamertag: String) -> Option<Xuid> {
+    println!("Attempting lookup of xuid from gamertag \"{}\"", gamertag);
+
     let rows = client.query(
         "SELECT xuid FROM clients WHERE gamertag = $1 LIMIT 1",
         &[&gamertag]

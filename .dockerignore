@@ -1,3 +1,8 @@
 .git
 ignore_me
 target
+!target/release/api
+!target/release/kdc
+!target/release/faux-dns
+!target/release/sg
+cargo
