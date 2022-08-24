@@ -34,3 +34,4 @@ COPY --from=builder /opt/xombie-build/target/release/faux-dns /opt/xombie/bin/fa
 FROM common AS sg
 EXPOSE 3074/udp
 COPY --from=builder /opt/xombie-build/target/release/sg /opt/xombie/bin/sg
+COPY data/motd /motd
