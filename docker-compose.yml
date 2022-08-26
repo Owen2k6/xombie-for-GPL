@@ -33,12 +33,13 @@ services:
         build:
             context: .
             target: kdc
-        command: /opt/xombie/bin/kdc
-        ports:
-            - "192.168.5.1:88:88/udp"
-        networks:
-            - frontend
-            - backend
+        command: /opt/xombie/bin/kdc --kdc-addr 192.168.5.1 --pg-addr 192.168.5.1
+        # ports:
+        #     - "192.168.5.1:88:88/udp"
+        # networks:
+        #     - frontend
+        #     - backend
+        network_mode: host
         depends_on:
             - db
             - redis
@@ -48,15 +49,16 @@ services:
         build:
             context: .
             target: sg
-        command: /opt/xombie/bin/sg
-        ports:
-            - "192.168.5.1:3074:3074/udp"
-        networks:
-            - frontend
-            - backend
+        command: /opt/xombie/bin/sg --sg-addr 192.168.5.1 --pg-addr 192.168.5.1
+        # ports:
+        #     - "192.168.5.1:3074:3074/udp"
+        # networks:
+        #     - frontend
+        #     - backend
         depends_on:
             - db
             - redis
+        network_mode: host
         restart: always
     
     redis:
