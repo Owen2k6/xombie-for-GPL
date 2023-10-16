@@ -646,8 +646,8 @@ mod tests {
 				title_id: 0x4c41000b,
 				procedure_index: 1,
 				client_address: Addr {
-					addr: InAddr([10, 0, 2, 15]),
-					addr_online: InAddr([192, 168, 1, 91]),
+					addr: InAddr([192, 168, 1, 69]),
+					addr_online: InAddr([86, 163, 2, 230]),
 					port_online: 0x7390,
 					enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 					online: hex!["0a 00 00 64 00 02 00 00 01 00 00 00 00 00 00 00 00 00 00 00"],
@@ -689,8 +689,8 @@ mod tests {
 			title_id: 0x4c41000b,
 			procedure_index: 1,
 			client_address: Addr {
-				addr: InAddr([10, 0, 2, 15]),
-				addr_online: InAddr([192, 168, 1, 91]),
+				addr: InAddr([192, 168, 1, 69]),
+				addr_online: InAddr([86, 163, 2, 230]),
 				port_online: 0x7390,
 				enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 				online: hex!["0a 00 00 64 00 02 00 00 01 00 00 00 00 00 00 00 00 00 00 00"],
@@ -740,8 +740,8 @@ mod tests {
 				session_id: KeyId(hex!["00 00 00 00 00 00 00 00"]),
 				title_id: 0x4c41000b,
 				host_address: Addr {
-					addr: InAddr([10, 0, 2, 15]),
-					addr_online: InAddr([192, 168, 1, 91]),
+					addr: InAddr([192, 168, 1, 69]),
+					addr_online: InAddr([86, 163, 2, 230]),
 					port_online: 0x25c7,
 					enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 					online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -785,8 +785,8 @@ mod tests {
 			session_id: KeyId(hex!["00 00 00 00 00 00 00 00"]),
 			title_id: 0x4c41000b,
 			host_address: Addr {
-				addr: InAddr([10, 0, 2, 15]),
-				addr_online: InAddr([192, 168, 1, 91]),
+				addr: InAddr([192, 168, 1, 69]),
+				addr_online: InAddr([86, 163, 2, 230]),
 				port_online: 0x25c7,
 				enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 				online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -859,8 +859,8 @@ mod tests {
 						result_length: 100,
 						session_id: KeyId(hex!["00 11 22 33 44 55 66 77"]),
 						host_address: Addr {
-							addr: InAddr([10, 0, 2, 15]),
-							addr_online: InAddr([192, 168, 1, 91]),
+							addr: InAddr([192, 168, 1, 69]),
+					                addr_online: InAddr([86, 163, 2, 230]),
 							port_online: 0x25c7,
 							enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 							online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -882,8 +882,8 @@ mod tests {
 						result_length: 100,
 						session_id: KeyId(hex!["01 23 45 67 89 ab cd ef"]),
 						host_address: Addr {
-							addr: InAddr([10, 0, 2, 15]),
-							addr_online: InAddr([192, 168, 1, 91]),
+							addr: InAddr([192, 168, 1, 69]),
+					                addr_online: InAddr([86, 163, 2, 230]),
 							port_online: 0x25c7,
 							enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 							online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -946,8 +946,8 @@ mod tests {
 				result_length: 100,
 				session_id: KeyId(hex!["01 23 45 67 89 ab cd ef"]),
 				host_address: Addr {
-					addr: InAddr([10, 0, 2, 15]),
-					addr_online: InAddr([192, 168, 1, 91]),
+					addr: InAddr([192, 168, 1, 69]),
+					addr_online: InAddr([86, 163, 2, 230]),
 					port_online: 0x25c7,
 					enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 					online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -971,8 +971,8 @@ mod tests {
 		assert_eq!(SearchResult::generate(
 			KeyId(hex!["01 23 45 67 89 ab cd ef"]),
 			Addr {
-				addr: InAddr([10, 0, 2, 15]),
-				addr_online: InAddr([192, 168, 1, 91]),
+				addr: InAddr([192, 168, 1, 69]),
+				addr_online: InAddr([86, 163, 2, 230]),
 				port_online: 0x25c7,
 				enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 				online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
@@ -991,8 +991,8 @@ mod tests {
 				result_length: 100,
 				session_id: KeyId(hex!["01 23 45 67 89 ab cd ef"]),
 				host_address: Addr {
-					addr: InAddr([10, 0, 2, 15]),
-					addr_online: InAddr([192, 168, 1, 91]),
+					addr: InAddr([192, 168, 1, 69]),
+					addr_online: InAddr([86, 163, 2, 230]),
 					port_online: 0x25c7,
 					enet: Eui48(hex!["00 50 f2 1f 64 53"]),
 					online: hex!["0a 00 00 64 00 01 00 00 01 00 00 00 00 00 00 00 00 00 00 00"]
