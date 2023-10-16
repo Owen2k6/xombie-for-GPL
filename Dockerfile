@@ -27,9 +27,10 @@ FROM common AS kdc
 EXPOSE 88/udp
 COPY --from=builder /opt/xombie-build/target/release/kdc /opt/xombie/bin/kdc
 
-FROM common AS dns
-EXPOSE 5300/udp
-COPY --from=builder /opt/xombie-build/target/release/faux-dns /opt/xombie/bin/faux-dns
+#Goplex Live uses an external DNS Server.
+#FROM common AS dns
+#EXPOSE 5300/udp
+#COPY --from=builder /opt/xombie-build/target/release/faux-dns /opt/xombie/bin/faux-dns
 
 FROM common AS sg
 EXPOSE 3074/udp
